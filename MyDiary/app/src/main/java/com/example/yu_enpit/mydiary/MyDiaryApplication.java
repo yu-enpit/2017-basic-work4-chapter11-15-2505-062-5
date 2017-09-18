@@ -1,9 +1,9 @@
 package com.example.yu_enpit.mydiary;
 
-import android.app.Application;
+        import android.app.Application;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
+        import io.realm.Realm;
+        import io.realm.RealmConfiguration;
 
 /**
  * Created by 藤田朱里 on 2017/08/08.

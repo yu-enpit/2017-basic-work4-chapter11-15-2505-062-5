@@ -20,13 +20,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.IOException;
+
 import io.realm.Realm;
 
 import static android.app.Activity.RESULT_OK;
 
-
 public class InputDiaryFragment extends Fragment {
-    private static final String DIARY_ID = "DAIRY_ID";
+    private static final String DIARY_ID = "DIARY_ID";
     private static final int REQUEST_CODE = 1;
     private static final int PERMISSION_REQUEST_CODE = 2;
 
@@ -79,11 +80,9 @@ public class InputDiaryFragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {}
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {}
-
             @Override
             public void afterTextChanged(final Editable s) {
                 mRealm.executeTransactionAsync(new Realm.Transaction() {
@@ -111,9 +110,9 @@ public class InputDiaryFragment extends Fragment {
                 mRealm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Diary diary = realm.where(Diary.class).equalTo("Id",
+                        Diary diary = realm.where(Diary.class).equalTo("id",
                                 mDiaryId).findFirst();
-                        diary.bodyText = s.toString();
+                        diary.bodyText=s.toString();
                     }
                 });
             }
@@ -127,7 +126,7 @@ public class InputDiaryFragment extends Fragment {
                 != PackageManager.PERMISSION_GRANTED) {
             if(shouldShowRequestPermissionRationale(
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Snackbar.make(view, R.string.rationale,
+                Snackbar.make(view,R.string.rationale,
                         Snackbar.LENGTH_LONG).show();
             }
 
@@ -163,21 +162,21 @@ public class InputDiaryFragment extends Fragment {
                     Bitmap img = MyUtils.getImageFromStream(
                             getActivity().getContentResolver(), uri);
                     mDiaryImage.setImageBitmap(img);
-                } catch (java.io.IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 mRealm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         Diary diary = realm.where(Diary.class)
-                                .equalTo("Id", mDiaryId)
+                                .equalTo("id", mDiaryId)
                                 .findFirst();
                         BitmapDrawable bitmap =
                                 (BitmapDrawable) mDiaryImage.getDrawable();
                         byte[] bytes = MyUtils.getByteFromImage
                                 (bitmap.getBitmap());
-                        if (bytes != null && bytes.length > 0) {
-                            diary.image = bytes;
+                        if(bytes != null && bytes.length > 0) {
+                            diary.image=bytes;
                         }
                     }
                 });

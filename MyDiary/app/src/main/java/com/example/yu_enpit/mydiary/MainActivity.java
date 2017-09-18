@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
 
         mRealm = Realm.getDefaultInstance();
 
-        createTestData();
+        //createTestData();
         showDiaryList();
     }
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
                 Number maxId = mRealm.where(Diary.class).max("id");
                 long nextId = 0;
                 if (maxId != null) nextId = maxId.longValue() + 1;
-                //createObjectではIDを渡してオブジェクトを生成する
+                // createObjectではIDを渡してオブジェクトを生成する
                 Diary diary = realm.createObject(Diary.class, new Long(nextId));
                 diary.title = "テストタイトル";
                 diary.bodyText = "テスト本文です。";
@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity
         mRealm.beginTransaction();
         Number maxId = mRealm.where(Diary.class).max("id");
         long nextId = 0;
-        if(maxId != null) nextId = maxId.longValue() + 1;
+        if (maxId != null) nextId = maxId.longValue() + 1;
         Diary diary = mRealm.createObject(Diary.class, new Long(nextId));
-        diary.date =  new SimpleDateFormat("MMM d", Locale.US).
+        diary.date = new SimpleDateFormat("MMM d", Locale.US).
                 format(new Date());
         mRealm.commitTransaction();
 

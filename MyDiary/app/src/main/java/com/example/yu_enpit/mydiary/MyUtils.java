@@ -12,9 +12,8 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.MenuItem;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-
-import io.realm.internal.IOException;
 
 /**
  * Created by 藤田朱里 on 2017/08/08.
@@ -27,7 +26,7 @@ public class MyUtils {
         opt.inJustDecodeBounds = true;
         BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opt);
         int bitmapSize = 1;
-        if((opt.outHeight * opt.outWidth) > 500000) {
+        if((opt.outHeight * opt.outWidth) > 5000) {
             double outSize = (double) (opt.outHeight * opt.outWidth) / 500000;
             bitmapSize = (int)(Math.sqrt(outSize) + 1);
         }
@@ -46,7 +45,7 @@ public class MyUtils {
     }
 
     public static Bitmap getImageFromStream(ContentResolver resolver, Uri uri)
-            throws IOException, java.io.IOException {
+            throws IOException {
         InputStream in;
         BitmapFactory.Options opt = new BitmapFactory.Options();
         opt.inJustDecodeBounds = true;
@@ -62,7 +61,7 @@ public class MyUtils {
         opt.inJustDecodeBounds = false;
         opt.inSampleSize = bitmapSize;
         in = resolver.openInputStream(uri);
-        Bitmap bmp = BitmapFactory.decodeStream(in, null, opt);
+        Bitmap bmp = BitmapFactory.decodeStream(in,null,opt);
         in.close();
         return bmp;
     }

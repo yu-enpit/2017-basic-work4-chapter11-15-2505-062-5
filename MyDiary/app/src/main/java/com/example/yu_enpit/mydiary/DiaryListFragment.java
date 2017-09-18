@@ -2,7 +2,7 @@ package com.example.yu_enpit.mydiary;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +16,12 @@ import android.view.ViewGroup;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-
 public class DiaryListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Realm mRealm;
 
-    public DiaryListFragment() { }
+    public DiaryListFragment() {}
 
     public static DiaryListFragment newInstance() {
         DiaryListFragment fragment = new DiaryListFragment();
@@ -82,7 +81,7 @@ public class DiaryListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@NonNull Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -93,26 +92,26 @@ public class DiaryListFragment extends Fragment {
         inflater.inflate(R.menu.menu_diary_list, menu);
         MenuItem addDiary = menu.findItem(R.id.menu_item_add_diary);
         MenuItem deleteAll = menu.findItem(R.id.menu_item_delete_all);
-        MyUtils.tintMenuIcon(getContext(), addDiary, android.R.color.white);
-        MyUtils.tintMenuIcon(getContext(), deleteAll, android.R.color.white);
+        MyUtils.tintMenuIcon(getContext(),addDiary,android.R.color.white);
+        MyUtils.tintMenuIcon(getContext(),deleteAll,android.R.color.white);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch(item.getItemId()) {
             case R.id.menu_item_add_diary:
-                if(mListener != null) mListener.onAddDiarySelected();
+                if (mListener != null) mListener.onAddDiarySelected();
                 return true;
             case R.id.menu_item_delete_all:
                 final RealmResults<Diary> diaries =
                         mRealm.where(Diary.class).findAll();
                 mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    diaries.deleteAllFromRealm();
-                }
-            });
-            return true;
+                    @Override
+                    public void execute(Realm realm) {
+                        diaries.deleteAllFromRealm();
+                    }
+                });
+                return true;
         }
         return false;
     }

@@ -1,10 +1,14 @@
 package com.example.yu_enpit.mydiary;
 
-import android.content.Context;
+/**
+ * Created by 藤田朱里 on 2017/08/08.
+ */
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +19,11 @@ import android.widget.TextView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-/**
- * Created by 藤田朱里 on 2017/08/08.
- */
 
 public class DiaryRealmAdapter extends RealmRecyclerViewAdapter<Diary,
         DiaryRealmAdapter.DiaryViewHolder> {
 
-    Context context;
+    FragmentActivity context;
 
     public static class DiaryViewHolder extends RecyclerView.ViewHolder {
         protected TextView title;
@@ -39,13 +40,12 @@ public class DiaryRealmAdapter extends RealmRecyclerViewAdapter<Diary,
         }
     }
 
-    public DiaryRealmAdapter(@NonNull Context context,
+    public DiaryRealmAdapter(@NonNull FragmentActivity context,
                              @Nullable OrderedRealmCollection<Diary> data, boolean autoUpdate) {
         super(data, autoUpdate);
         this.context = context;
     }
 
-    @Override
     public DiaryViewHolder onCreateViewHolder(ViewGroup parent,
                                               int viewType) {
         View itemView = LayoutInflater
@@ -65,12 +65,14 @@ public class DiaryRealmAdapter extends RealmRecyclerViewAdapter<Diary,
                 context.startActivity(intent);
             }
         });
+
         return holder;
     }
 
+
+
     @Override
     public void onBindViewHolder(DiaryViewHolder holder, int position) {
-
         Diary diary = getData().get(position);
         holder.title.setText(diary.title);
         holder.bodyText.setText(diary.bodyText);

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import io.realm.Realm;
 
 public class ShowDiaryActivity extends AppCompatActivity {
-    public static final String DIARY_ID = "DIARRY_ID";
+    public static final String DIARY_ID = "DIARY_ID";
     private static final long ERR_CD = -1;
 
     private String mBodyText;
